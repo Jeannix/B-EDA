@@ -88,12 +88,6 @@ class BLinkTree {
 			std::cout<<"NO"<<std::endl;
 			return false;
   }
-  void setVariable(Node* &pNode, int uValor, int uIte, Node* prevNode, Node* nextNode) {
-    pNode->key.insert(pNode->key.begin()+uIte, uValor);
-    pNode->ptr[pNode->key.size()] = nextNode;
-    pNode->ptr[pNode->key.size()-1] = prevNode;
-  }
-
  
 };//not
 /*
