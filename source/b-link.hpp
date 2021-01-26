@@ -40,61 +40,7 @@ class BLinkTree {
 			} 
 		} 
 	}
-	void insertInternal(const data_type& value, Node* temp, Node* hijo){
-		if(temp->tam<B){  
-			int i=0;
-			for(;value>temp->clave[i] && i<temp->tam;i++);
-			for(int j=temp->tam;j>i; j--){ 				
-				temp->clave[j]=temp->clave[j-1]; 
-			}
-			for(int j=temp->tam+1;j>i+1; j--){ 
-				temp->ptr[j]=temp->ptr[j-1]; 
-			} 
-			temp->clave[i]=value; 
-			temp->tam++; 
-			temp->ptr[i+1]=hijo; 
-		}
-		else{ 	
-			Node* newInternal=new Node; 
-			int virtualclave[B+1]; 
-			Node* virtualPtr[B+2]; 
-			for(int i=0; i<B; i++){ 
-				virtualclave[i]=temp->clave[i]; 
-			} 
-			for(int i=0; i<B+1; i++){ 
-				virtualPtr[i]=temp->ptr[i]; 
-			} 
-			int i=0, j;
-			while(value>virtualclave[i] && i<B){ 
-				i++; 
-			} 
-			for(int j=B+1;j>i; j--){ 
-				virtualclave[j]=virtualclave[j-1]; 
-			} 
-			virtualclave[i]=value; 
-			for(int j=B+2;j>i+1;j--){ 
-				virtualPtr[j]=virtualPtr[j-1]; 
-			} 
-			virtualPtr[i+1]=hijo; 
-			newInternal->hoja=false; 
-			temp->tam=(B+1)/2;
-			newInternal->tam=B-(B+1)/2; 
-			for(i=0, j=temp->tam+1; i<newInternal->tam; i++, j++){ 
-				newInternal->clave[i]=virtualclave[j]; 
-			} 
-			for(i=0, j=temp->tam+1; i<newInternal->tam+1; i++, j++){ 
-				newInternal->ptr[i]=virtualPtr[j]; 
-			} 
-			if(temp==raiz){ 
-				Node* newraiz=new Node(temp, newInternal);
-				newraiz->clave[0]=temp->clave[temp->tam];
-				raiz=newraiz; 
-			}
-			else{
-				insertInternal(temp->clave[temp->tam], busquedaUp(raiz, temp), newInternal); 
-			} 
-		} 
-	} 
+
 	Node* busquedaUp(Node* temp, Node* hijo){
 		Node* padre;
 		if(temp->hoja||(temp->ptr[0])->hoja){ 
@@ -142,72 +88,12 @@ class BLinkTree {
 			std::cout<<"NO"<<std::endl;
 			return false;
   }
-	void insert(const data_type& value){ 
-	if(raiz==NULL){ 
-		raiz=new Node; 
-		raiz->clave[0]=value; 
-		raiz->hoja=true; 
-		raiz->tam=1; 
-	} 
-	else{ 
-		Node* temp=raiz; 
-		Node* padre; 
-		itebusqueda(value, temp);
-		if(temp->tam<B){ 
-			int i=0; 
-			while(value>temp->clave[i] && i<temp->tam){ 
-				i++; 
-			} 
-			for(int j=temp->tam;j>i; j--){ 
-				temp->clave[j]=temp->clave[j-1]; 
-			} 
-			
-			temp->clave[i]=value; 
-			temp->tam++; 
-			temp->ptr[temp->tam]=temp->ptr[temp->tam-1]; 
-			temp->ptr[temp->tam-1]=NULL; 
-		} 
-		else{ 
-			Node* newLeaf=new Node; 
-			int virtualNode[B+1]; 
-			for(int i=0; i<B; i++){ 
-				virtualNode[i]=temp->clave[i]; 
-			} 
-			int i=0, j; 
-			while(value>virtualNode[i] && i<B){ 
-				i++; 
-			} 
-			for(int j=B+1;j>i;j--){ 
-				virtualNode[j]=virtualNode[j-1]; 
-			} 
-			virtualNode[i]=value; 
-			newLeaf->hoja=true; 
-			temp->tam=(B+1)/2; 
-			newLeaf->tam=B+1-(B+1)/2; 
-			temp->ptr[temp->tam]=newLeaf; 
-			newLeaf->ptr[newLeaf->tam]=temp->ptr[B]; 
-			temp->ptr[B]=NULL; 
-			for(i=0; i<temp->tam; i++){ 
-				temp->clave[i]=virtualNode[i]; 
-			}
-			for(i=0, j=temp->tam; i<newLeaf->tam; i++, j++){ 
-				newLeaf->clave[i]=virtualNode[j]; 
-			} 
-			if(temp==raiz){ 
-				Node* newraiz=new Node;
-				newraiz->clave[0]=newLeaf->clave[0];
-				newraiz->ptr[0]=temp; 
-				newraiz->ptr[1]=newLeaf; 
-				newraiz->hoja=false; 
-				newraiz->tam=1; 
-				raiz=newraiz;
-			}
-			else{ 
-				insertInternal(newLeaf->clave[0], padre, newLeaf); 
-			} 
-		} 
-	} 
-} 
+  void setVariable(Node* &pNode, int uValor, int uIte, Node* prevNode, Node* nextNode) {
+    pNode->key.insert(pNode->key.begin()+uIte, uValor);
+    pNode->ptr[pNode->key.size()] = nextNode;
+    pNode->ptr[pNode->key.size()-1] = prevNode;
+  }
+
  
 };//not
 /*

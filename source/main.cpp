@@ -37,7 +37,7 @@ void sequential_insert(EDA::Concurrent::BLinkTree<3, int> *b_link) {
 	std::uniform_int_distribution<int> distribution(MIN_VALUE, MAX_VALUE);
 	for (std::size_t i = 0; i < NUMBER_OPERATIONS; ++i) {
 		//std::cout << distribution(rd) << "\n";
-		 b_link->insert(distribution(rd));
+		//b_link->insert(distribution(rd));
 	}
 }
 
@@ -53,19 +53,19 @@ void run_test() {
 	}
 	for (std::size_t i = 0; i < NUMBER_THREADS; ++i) {
 		threads[i].join();
-		std::cout<<"HA, Paintbrush AIDS"<<std::endl;
+		//std::cout<<"HA"<<std::endl;
 	}
 }
 
 int main() {
-//	run_test();
-	EDA::Concurrent::BLinkTree<3, int> arbolon;
-	arbolon.insert(8);
-	arbolon.insert(9);
-	arbolon.insert(10);
-	arbolon.insert(6);
-	arbolon.search(10);
-	arbolon.search(9);
-	arbolon.search(6);
+	run_test();
+	//EDA::Concurrent::BLinkTree<3, int> arbolon;
+	//arbolon.insert(8);
+	//arbolon.insert(9);
+	//arbolon.insert(10);
+	//arbolon.insert(6);
+	//arbolon.search(10);
+	//arbolon.search(9);
+	//arbolon.search(6);
 	return 0;
 }
